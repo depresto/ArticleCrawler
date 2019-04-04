@@ -21,6 +21,8 @@ module ArticleCrawler
       @save_file_path = "./save/#{hostname}"
       system 'mkdir', '-p', @save_file_path
 
+      @title = ''
+      @content = ''
       @page = Nokogiri::HTML(open(@uri.to_s))
     end
 
@@ -69,12 +71,8 @@ module ArticleCrawler
       raise NotImplementedError
     end
 
-    def to_docx(title, content)
-      filepath = "#{@save_file_path}/#{title}.docx"
-      print "Writing: #{filepath} ..."
-      doc = PandocRuby.html(content).to_docx
-      print "Done\n"
-      doc
+    def to_docx(content)
+      PandocRuby.html(content).to_docx
     end
   end
 end

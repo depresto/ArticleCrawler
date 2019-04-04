@@ -1,4 +1,4 @@
-# 文章列表爬蟲 Blog Article Crawler
+# 文章列表爬蟲 Blog Article Crawler (Serverless version)
 
 ### Description
 
@@ -8,8 +8,19 @@ Crawl article list to docx file
 
 ### Usage
 
-```bash
-ruby app.py BLOG_URL
+```ruby
+require 'article_crawler'
+
+crawler = ArticleCrawler['https://mp.weixin.qq.com/s/v95X2diOOMU3bTiWtHiD1g']
+if crawler.article_list? # True if is a article list page
+  list = crawler.crawl_article_list
+  list.each do |link|
+    
+  end
+else
+  article = crawler.crawl_article
+  docx = article.to_docx
+end
 ```
 
 ### Example Input
