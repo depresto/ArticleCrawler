@@ -1,13 +1,7 @@
 module ArticleCrawler
   class Weixin < Base
-
     def initialize(*)
       super
-    end
-
-    def crawl
-      result = crawl_article(@uri.to_s)
-      to_docx(result[:title], result[:content])
     end
 
     def article_list?

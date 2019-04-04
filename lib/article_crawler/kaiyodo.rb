@@ -5,10 +5,6 @@ module ArticleCrawler
       super
     end
 
-    def article_list?
-      true
-    end
-
     def article_list
       @page.css('.boxNews_wrapper .boxMain ul.lists li')
     end
@@ -21,22 +17,20 @@ module ArticleCrawler
       @page.css('#container .navigation ol.wp-paginate li a.next').attr('href')
     end
 
-    def crawl_article(link)
-      article_page = open_page(link)
+    def crawl_article
+      article_page = @page
 
       article_section = article_page.css('#container #page_content')
       article_section.search('.wp_social_bookmarking_light').remove
-      title = article_section.css('.entry_title').text
+      @title = article_section.css('.entry_title').text
 
       title_html = article_section.css('.entry_title').to_html
       content_html = article_section.css('.entry_body').to_html
 
-      content = %(
+      @content = %(
         #{title_html}
         #{content_html}
       )
-
-      to_docx(title, content)
     end
   end
 end

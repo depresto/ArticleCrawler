@@ -15,11 +15,16 @@ crawler = ArticleCrawler['https://mp.weixin.qq.com/s/v95X2diOOMU3bTiWtHiD1g']
 if crawler.article_list? # True if is a article list page
   list = crawler.crawl_article_list
   list.each do |link|
-    
+    article = ArticleCrawler[link]
+    article = article.crawl_article
+
+    docx = article.to_docx
   end
 else
   article = crawler.crawl_article
   docx = article.to_docx
+
+  File.write('/path/to/file', docx)
 end
 ```
 

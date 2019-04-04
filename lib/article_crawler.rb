@@ -6,7 +6,7 @@ require 'pandoc-ruby'
 module ArticleCrawler
   class << self
     def [](url)
-      uri = URI(url)
+      uri = URI(URI.escape(url))
       class_name = uri.host.split('.')[0].capitalize
       class_name = 'Weixin' if class_name == 'Mp'
 
@@ -15,6 +15,8 @@ module ArticleCrawler
   end
 
   class Base
+    attr_reader :title
+
     def initialize(uri, hostname)
       @uri = uri
 
@@ -56,7 +58,7 @@ module ArticleCrawler
     end
 
     def article_list?
-      raise NotImplementedError
+      article_list.any?
     end
 
     def article_link(_article)
