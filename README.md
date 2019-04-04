@@ -27,13 +27,3 @@ else
   File.write('/path/to/file', docx)
 end
 ```
-
-### Example Input
-
-in ./save/SITE_DOMAIN/
-
-### Output
-
-All the output files will be in ./save directory,
-
-and all docx files are in ./save/SITE_DOMAIN/

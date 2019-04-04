@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name        = 'article_crawler'
-  s.version     = '0.0.1'
+  s.version     = '0.1.0'
   s.date        = '2019-04-02'
   s.summary     = 'Article auto crawler'
   s.description = 'A crawler that can crawl Weixin and some WordPress sites'
