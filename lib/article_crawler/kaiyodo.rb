@@ -5,7 +5,9 @@ module ArticleCrawler
       super
     end
 
-    private
+    def article_list?
+      true
+    end
 
     def article_list
       @page.css('.boxNews_wrapper .boxMain ul.lists li')
@@ -30,16 +32,11 @@ module ArticleCrawler
       content_html = article_section.css('.entry_body').to_html
 
       content = %(
-        <html>
-          <head></head>
-          <body>
-          #{title_html}
-          #{content_html}
-          </body>
-        </html>
+        #{title_html}
+        #{content_html}
       )
 
-      { title: title, content: content }
+      to_docx(title, content)
     end
   end
 end

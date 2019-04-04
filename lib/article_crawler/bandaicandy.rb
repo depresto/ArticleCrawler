@@ -5,7 +5,9 @@ module ArticleCrawler
       super
     end
 
-    private
+    def article_list?
+      true
+    end
 
     def article_list
       @page.css('#main #main-inner .archive-entries section')
@@ -30,16 +32,11 @@ module ArticleCrawler
       content_html = article_section.css('.entry-content').to_html
 
       content = %(
-        <html>
-          <head></head>
-          <body>
-          #{title_html}
-          #{content_html}
-          </body>
-        </html>
+        #{title_html}
+        #{content_html}
       )
 
-      { title: title, content: content }
+      to_docx(title, content)
     end
   end
 end

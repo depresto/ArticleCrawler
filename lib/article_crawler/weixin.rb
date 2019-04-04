@@ -10,7 +10,9 @@ module ArticleCrawler
       to_docx(result[:title], result[:content])
     end
 
-    private
+    def article_list?
+      false
+    end
 
     def crawl_article(link)
       article_page = open_page(link)
@@ -23,16 +25,12 @@ module ArticleCrawler
       content_html = content_html.gsub('data-src', 'src')
 
       content = %(
-        <html>
-          <head></head>
-          <body>
-          #{title_html}
-          #{content_html}
-          </body>
-        </html>
+        #{title_html}
+        #{content_html}
       )
 
-      { title: title, content: content }
+      to_docx(title, content)
     end
+
   end
 end

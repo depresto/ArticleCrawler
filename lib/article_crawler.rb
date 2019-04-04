@@ -20,6 +20,8 @@ module ArticleCrawler
 
       @save_file_path = "./save/#{hostname}"
       system 'mkdir', '-p', @save_file_path
+
+      @page = Nokogiri::HTML(open(@uri.to_s))
     end
 
     def crawl
@@ -27,21 +29,20 @@ module ArticleCrawler
       crawl_article_list
     end
 
-    private
-
     def crawl_article_list
+      list = []
+
       loop do
-        article_list.each do |article|
-          result = crawl_article(article_link(article))
-          to_docx(result[:title], result[:content])
-        end
+        article_list.each { |article| list.push(article_link(article)) }
 
         # Exit if no next page
-        return if next_page_link.nil?
+        break if next_page_link.nil?
 
         # Crawl next page
         @page = open_page(next_page_link)
       end
+
+      list
     end
 
     def open_page(uri)
@@ -49,6 +50,10 @@ module ArticleCrawler
     end
 
     def article_list
+      raise NotImplementedError
+    end
+
+    def article_list?
       raise NotImplementedError
     end
 
@@ -68,8 +73,8 @@ module ArticleCrawler
       filepath = "#{@save_file_path}/#{title}.docx"
       print "Writing: #{filepath} ..."
       doc = PandocRuby.html(content).to_docx
-      File.write(filepath, doc)
       print "Done\n"
+      doc
     end
   end
 end
